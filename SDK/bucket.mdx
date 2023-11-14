@@ -3,9 +3,9 @@ title: "BUCKET OPERATIONS"
 sidebarTitle: "Bucket Ops"
 ---
 
-## PUT BUCKET
+## Put Bucket
 
-Creates a new bucket. To create a bucket, you must have a user ID and a valid AWS Access Key ID to authenticate requests. You may not create buckets as an anonymous user.
+To create a new bucket, it is required to have a user ID and a valid AWS Access Key ID for authenticating requests. The creation of buckets is not allowed for anonymous users; proper authentication through a user ID and AWS Access Key ID is necessary.
 
 ### Constraints
 
@@ -32,15 +32,15 @@ Authorization: AWS {access-key}:{hash-of-header-and-secret}
 
 | Name                             | Description                                 | Valid Values                                      | Required |
 |----------------------------------|---------------------------------------------|---------------------------------------------------|----------|
-| `x-amz-acl `                       | Canned ACLs.                                | private, public-read, public-read-write, authenticated-read | No       |
-| `x-amz-bucket-object-lock-enabled` | Enable object lock on bucket.               | true, false                                       | No       |
+| `x-amz-acl `                       | Canned ACLs.                                | `private`, `public-read`, `public-read-write`, `authenticated-read` | No       |
+| `x-amz-bucket-object-lock-enabled` | Enable object lock on bucket.               | `true`, `false`                                       | No       |
 
 ### Request Entities
 
 | Name                      | Type      | Description                                              |
 |---------------------------|-----------|----------------------------------------------------------|
-| CreateBucketConfiguration | Container | A container for the bucket configuration.                |
-| LocationConstraint        | String    | A zonegroup API name, with optional S3 Bucket Placement. |
+| `CreateBucketConfiguration` | Container | A container for the bucket configuration.                |
+| `LocationConstraint`        | String    | A zonegroup API name, with optional [S3 Bucket Placement](hiden/s3-bucket-placement). |
 
 ### HTTP Response
 
@@ -77,7 +77,7 @@ Returns a list of bucket objects.
 
 ```
 GET /{bucket}?max-keys=25 HTTP/1.1
-Host: cname.domain.com
+Host: hn.storage.weodata.vn
 ```
 
 ### Parameters
@@ -94,7 +94,7 @@ Host: cname.domain.com
 
 | HTTP Status | Status Code | Description       |
 |-------------|-------------|-------------------|
-| 200         | OK          | Buckets retrieved |
+| `200`         | OK          | Buckets retrieved |
 
 ### Bucket Response Entities
 
@@ -117,13 +117,13 @@ The `ListBucketResult` contains objects, where each object is within a `Contents
 
 | Name          | Type      | Description                           |
 |---------------|-----------|---------------------------------------|
-| Contents      | Object    | A container for the object.            |
-| Key           | String    | The object’s key.                      |
-| LastModified  | Date      | The object’s last-modified date/time.  |
-| ETag          | String    | An MD-5 hash of the object. (entity tag) |
-| Size          | Integer   | The object’s size.                     |
-| StorageClass  | String    | Should always return `STANDARD`.         |
-| Type          | String    | `Appendable` or `Normal`.                  |
+| `Contents`      | Object    | A container for the object.            |
+| `Key`           | String    | The object’s key.                      |
+| `LastModified`  | Date      | The object’s last-modified date/time.  |
+| `ETag`          | String    | An MD-5 hash of the object. (entity tag) |
+| `Size`          | Integer   | The object’s size.                     |
+| `StorageClass`  | String    | Should always return `STANDARD`.         |
+| `Type`          | String    | `Appendable` or `Normal`.                  |
 
 ## Get Bucket Location
 
@@ -135,7 +135,7 @@ Add the `location` subresource to bucket resource as shown below
 
 ```
 GET /{bucket}?location HTTP/1.1
-Host: cname.domain.com
+Host: hn.storage.weodata.vn
 
 Authorization: AWS {access-key}:{hash-of-header-and-secret}
 ```
@@ -144,11 +144,11 @@ Authorization: AWS {access-key}:{hash-of-header-and-secret}
 
 | Name                   | Type   | Description                                             |
 |------------------------|--------|---------------------------------------------------------|
-| LocationConstraint     | String | The region where the bucket resides, empty string for the default region. |
+| `LocationConstraint`     | String | The region where the bucket resides, empty string for the default region. |
 
 ## Get Bucket ACL
 
-Retrieves the bucket access control list. The user needs to be the bucket owner or to have been granted READ_ACP permission on the bucket.
+Retrieves the bucket access control list. The user needs to be the bucket owner or to have been granted `READ_ACP` permission on the bucket.
 
 ### Syntax
 
@@ -156,7 +156,7 @@ Add the `acl` subresource to the bucket request as shown below.
 
 ```
 GET /{bucket}?acl HTTP/1.1
-Host: cname.domain.com
+Host: hn.storage.weodata.vn
 
 Authorization: AWS {access-key}:{hash-of-header-and-secret}
 ```
@@ -165,14 +165,14 @@ Authorization: AWS {access-key}:{hash-of-header-and-secret}
 
 | Name                  | Type      | Description                                                                 |
 |-----------------------|-----------|-----------------------------------------------------------------------------|
-| AccessControlPolicy   | Container | A container for the response.                                               |
-| AccessControlList     | Container | A container for the ACL information.                                        |
-| Owner                 | Container | A container for the bucket owner’s `ID` and `DisplayName`.                     |
-| ID                    | String    | The bucket owner’s ID.                                                      |
-| DisplayName           | String    | The bucket owner’s display name.                                            |
-| Grant                 | Container | A container for `Grantee` and `Permission`.                                     |
-| Grantee               | Container | A container for the `DisplayName` and `ID` of the user receiving a grant of permission. |
-| Permission            | String    | The permission given to the `Grantee` bucket.                                 |
+| `AccessControlPolicy`   | Container | A container for the response.                                               |
+| `AccessControlList`     | Container | A container for the ACL information.                                        |
+| `Owner`                 | Container | A container for the bucket owner’s `ID` and `DisplayName`.                     |
+| `ID`                    | String    | The bucket owner’s ID.                                                      |
+| `DisplayName`           | String    | The bucket owner’s display name.                                            |
+| `Grant`                 | Container | A container for `Grantee` and `Permission`.                                     |
+| `Grantee`               | Container | A container for the `DisplayName` and `ID` of the user receiving a grant of permission. |
+| `Permission`            | String    | The permission given to the `Grantee` bucket.                                 |
 
 ## Put Bucket ACL
 
@@ -190,14 +190,295 @@ PUT /{bucket}?acl HTTP/1.1
 
 | Name                  | Type      | Description                                                                 |
 |-----------------------|-----------|-----------------------------------------------------------------------------|
-| AccessControlPolicy   | Container | A container for the request.                                                 |
-| AccessControlList     | Container | A container for the ACL information.                                         |
-| Owner                 | Container | A container for the bucket owner’s `ID` and `DisplayName`.                      |
-| ID                    | String    | The bucket owner’s `ID`.                                                       |
-| DisplayName           | String    | The bucket owner’s display name.                                             |
-| Grant                 | Container | A container for `Grantee` and `Permission`.                                      |
-| Grantee               | Container | A container for the `DisplayName` and `ID` of the user receiving a grant of permission. |
-| Permission            | String    | The permission given to the `Grantee` bucket.                                  |
+| `AccessControlPolicy`   | Container | A container for the request.                                                 |
+| `AccessControlList`     | Container | A container for the ACL information.                                         |
+| `Owner`                 | Container | A container for the bucket owner’s `ID` and `DisplayName`.                      |
+| `ID`                    | String    | The bucket owner’s `ID`.                                                       |
+| `DisplayName`           | String    | The bucket owner’s display name.                                             |
+| `Grant`                 | Container | A container for `Grantee` and `Permission`.                                      |
+| `Grantee`               | Container | A container for the `DisplayName` and `ID` of the user receiving a grant of permission. |
+| `Permission`            | String    | The permission given to the `Grantee` bucket.                                  |
 
+## List Bucket Multipart Uploads
+
+`GET /?uploads` returns a list of the current in-progress multipart uploads--i.e., the application initiates a multipart upload, but the service hasn’t completed all the uploads yet.
+
+### Syntax
+
+```
+GET /{bucket}?uploads HTTP/1.1
+```
+
+### Parameters
+
+You may specify parameters for `GET /{bucket}?uploads`, but none of them are required.
+
+| Name             | Type      | Description                                                                                             |
+|------------------|-----------|---------------------------------------------------------------------------------------------------------|
+| `prefix`           | String    | Returns in-progress uploads whose keys contain the specified prefix.                                   |
+| `delimiter`        | String    | The delimiter between the prefix and the rest of the object name.                                       |
+| `key-marker`       | String    | The beginning marker for the list of uploads.                                                           |
+| `max-keys`         | Integer   | The maximum number of in-progress uploads. The default is 1000.                                          |
+| `max-uploads`      | Integer   | The maximum number of multipart uploads. The range is from 1 to 1000. The default is 1000.              |
+| `upload-id-marker` | String    | Ignored if `key-marker` is not specified. Specifies the `ID` of the first upload to list in lexicographical order at or following the `ID`. |
+
+### Response Entities
+
+| Name                                  | Type      | Description                                                                                                  |
+|---------------------------------------|-----------|--------------------------------------------------------------------------------------------------------------|
+| `ListMultipartUploadsResult`            | Container | A container for the results.                                                                                 |
+| `ListMultipartUploadsResult.Prefix `     | String    | The prefix specified by the `prefix` request parameter (if any).                                              |
+| `Bucket`                                | String    | The bucket that will receive the bucket contents.                                                           |
+| `KeyMarker`                             | String    | The key marker specified by the `key-marker` request parameter (if any).                                      |
+| `UploadIdMarker`                        | String    | The marker specified by the `upload-id-marker` request parameter (if any).                                    |
+| `NextKeyMarker`                         | String    | The key marker to use in a subsequent request if `IsTruncated` is `true`.                                        |
+| `NextUploadIdMarker`                    | String    | The upload ID marker to use in a subsequent request if `IsTruncated` is `true`.                                   |
+| `MaxUploads`                            | Integer   | The max uploads specified by the `max-uploads` request parameter.                                              |
+| `Delimiter`                             | String    | If set, objects with the same prefix will appear in the `CommonPrefixes` list.                                   |
+| `IsTruncated`                           | Boolean   | If `true`, only a subset of the bucket’s upload contents were returned.                                        |
+| `Upload`                                | Container | A container for `Key`, `UploadId`, `Initiator`, `Owner`, `StorageClass`, and `Initiated` elements.                         |
+| `Key`                                   | String    | The key of the object once the multipart upload is complete.                                                 |
+| `UploadId`                              | String    | The `ID` that identifies the multipart upload.                                                                |
+| `Initiator`                             | Container | Contains the `ID` and `DisplayName` of the user who initiated the upload.                                       |
+| `DisplayName`                           | String    | The initiator’s display name.                                                                               |
+| `ID`                                    | String    | The initiator’s ID.                                                                                        |
+| `Owner`                                 | Container | A container for the ID and DisplayName of the user who owns the uploaded object.                             |
+| `StorageClass`                          | String    | The method used to store the resulting object. `STANDARD` or `REDUCED_REDUNDANCY`                                |
+| `Initiated`                             | Date      | The date and time the user initiated the upload.                                                            |
+| `CommonPrefixes`                        | Container | If multiple objects contain the same prefix, they will appear in this list.                                   |
+| `CommonPrefixes.Prefix`                 | String    | The substring of the key after the prefix as defined by the `prefix` request parameter.                        |
+
+## Enable/Suspend Bucket Versioning
+
+`PUT /?versioning` This subresource set the versioning state of an existing bucket. To set the versioning state, you must be the bucket owner.
+
+You can set the versioning state with one of the following values:
+
+- Enabled : Enables versioning for the objects in the bucket, All objects added to the bucket receive a unique version ID.
+- Suspended : Disables versioning for the objects in the bucket, All objects added to the bucket receive the version ID null.
+
+If the versioning state has never been set on a bucket, it has no versioning state; a GET versioning request does not return a versioning state value.
+
+### Syntax
+
+```
+PUT  /{bucket}?versioning  HTTP/1.1
+```
+
+### Request Entities
+
+| Name                        | Type      | Description                                           |
+|-----------------------------|-----------|-------------------------------------------------------|
+| `VersioningConfiguration`    | Container | A container for the request.                           |
+| `Status`                      | String    | Sets the versioning state of the bucket. Valid Values: Suspended/Enabled |
+
+## Put Bucket Object Lock 
+
+Applies an Object Lock configuration to the designated bucket, ensuring that the specified rule becomes the default for any new object added to the bucket.
+
+### Syntax
+
+```
+PUT /{bucket}?object-lock HTTP/1.1
+```
+
+### Request Entities
+
+| Name                    | Type      | Description                                               | Required |
+|-------------------------|-----------|-----------------------------------------------------------|----------|
+| `ObjectLockConfiguration` | Container | A container for the request.                                | Yes      |
+| `ObjectLockEnabled`        | String    | Indicates whether this bucket has an Object Lock configuration enabled. | Yes      |
+| `Rule`                    | Container | The Object Lock rule in place for the specified bucket.    | No       |
+| `DefaultRetention`        | Container | The default retention period applied to new objects placed in the specified bucket. | No       |
+| `Mode`                    | String    | The default Object Lock retention mode. Valid Values: GOVERNANCE/COMPLIANCE | Yes      |
+| `Days`                    | Integer   | The number of days specified for the default retention period. | No       |
+| `Years`                   | Integer   | The number of years specified for the default retention period. | No       |
+
+### HTTP Response
+
+The operation will fail if the Object Lock feature is not enabled during the creation of the bucket.
+
+| HTTP Status | Status Code | Description                                |
+|-------------|-------------|--------------------------------------------|
+| `400`         | MalformedXML| The XML is not well-formed.                |
+| `409`         | InvalidBucketState | The bucket object lock is not enabled. |
+
+## Get Bucket Object Lock
+
+Retrieves the Object Lock configuration for a specific bucket, with the rule outlined in the configuration serving as the default for any new object introduced to the designated bucket.
+
+### Syntax
+
+```
+GET /{bucket}?object-lock HTTP/1.1
+```
+
+### Response Entities
+
+| Name                    | Type      | Description                                               | Required |
+|-------------------------|-----------|-----------------------------------------------------------|----------|
+| `ObjectLockConfiguration` | Container | A container for the request.                                | Yes      |
+| `ObjectLockEnabled`        | String    | Indicates whether this bucket has an Object Lock configuration enabled. | Yes      |
+| `Rule`                    | Container | The Object Lock rule in place for the specified bucket.    | No       |
+| `DefaultRetention`        | Container | The default retention period applied to new objects placed in the specified bucket. | No       |
+| `Mode`                    | String    | The default Object Lock retention mode. Valid Values: GOVERNANCE/COMPLIANCE | Yes      |
+| `Days`                    | Integer   | The number of days specified for the default retention period. | No       |
+| `Years`                   | Integer   | The number of years specified for the default retention period. | No       |
+
+## Create Notification 
+
+Establish a publisher for a particular bucket to publish messages to a specified topic.
+
+### Syntax
+
+```
+PUT /{bucket}?notification HTTP/1.1
+```
+
+### Request Entities
+
+Parameters are XML encoded in the body of the request, in the following format:
+
+```
+<NotificationConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <TopicConfiguration>
+        <Id></Id>
+        <Topic></Topic>
+        <Event></Event>
+        <Filter>
+            <S3Key>
+                <FilterRule>
+                    <Name></Name>
+                    <Value></Value>
+                </FilterRule>
+                 </S3Key>
+             <S3Metadata>
+                 <FilterRule>
+                     <Name></Name>
+                     <Value></Value>
+                 </FilterRule>
+             </S3Metadata>
+             <S3Tags>
+                 <FilterRule>
+                     <Name></Name>
+                     <Value></Value>
+                 </FilterRule>
+             </S3Tags>
+         </Filter>
+    </TopicConfiguration>
+</NotificationConfiguration>
+```
+
+| Name                      | Type      | Description                                                                                                                                                             | Required |
+|---------------------------|-----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|----------|
+| `NotificationConfiguration` | Container | Holding a list of `TopicConfiguration` entities.                                                                                                                        | Yes      |
+| `TopicConfiguration`         | Container | Holding `Id`, `Topic`, and a list of `Event` entities.                                                                                                                        | Yes      |
+| `Id`                        | String    | Name of the notification.                                                                                                                                               | Yes      |
+| `Topic`                     | String    | Topic ARN. Topic must be created beforehand.                                                                                                                           | Yes      |
+| `Event`                     | String    | List of supported events see: S3 Notification Compatibility. Multiple Event entities can be used. If omitted, all events are handled.                                | No       |
+| `Filter`                    | Container | Holding S3Key, S3Metadata, and S3Tags entities.                                                                                                                         | No       |
+| `S3Key`                     | Container | Holding a list of FilterRule entities for filtering based on object key. At most, 3 entities may be in the list, with Name being prefix, suffix, or regex. All filter rules in the list must match for the filter to match. | No       |
+| `S3Metadata`                | Container | Holding a list of FilterRule entities for filtering based on object metadata. All filter rules in the list must match the metadata defined on the object. However, the object still matches if it has other metadata entries not listed in the filter. | No       |
+| `S3Tags`                    | Container | Holding a list of FilterRule entities for filtering based on object tags. All filter rules in the list must match the tags defined on the object. However, the object still matches if it has other tags not listed in the filter. | No       |
+| `S3Key.FilterRule`          | Container | Holding Name and Value entities. Name would be: prefix, suffix, or regex. The Value would hold the key prefix, key suffix, or a regular expression for matching the key, accordingly. | Yes      |
+| `S3Metadata.FilterRule`     | Container | Holding Name and Value entities. Name would be the name of the metadata attribute (e.g., x-amz-meta-xxx). The Value would be the expected value for this attribute. | Yes      |
+| `S3Tags.FilterRule`         | Container | Holding Name and Value entities. Name would be the tag key, and Value would be the tag value.                                                                         | Yes      |
+
+### HTTP Response
+
+| HTTP Status | Status Code | Description                                         |
+|-------------|-------------|-----------------------------------------------------|
+| `400`         | MalformedXML | The XML is not well-formed.                         |
+| `400`         | InvalidArgument | Missing Id; Missing/Invalid Topic ARN; Invalid Event |
+| `404`         | NoSuchBucket | The bucket does not exist.                          |
+| `404`         | NoSuchKey    | The topic does not exist.                           |
+
+## Delete Notification
+
+Delete a specific, or all, notifications from a bucket.
+
+### Syntax
+
+```
+DELETE /{bucket}?notification[=<notification-id>] HTTP/1.1
+```
+
+### Parameters
+
+| Name             | Type   | Description                                                 |
+|------------------|--------|-------------------------------------------------------------|
+| `notification-id`  | String | Name of the notification. If not provided, all notifications on the bucket are deleted. |
+
+### HTTP Response
+
+| HTTP Status | Status Code | Description           |
+|-------------|-------------|-----------------------|
+| `404`         | NoSuchBucket | The bucket does not exist. |
+
+## Get/List Notification
+
+Get a specific notification, or list all notifications configured on a bucket.
+
+### Syntax
+
+```
+GET /{bucket}?notification[=<notification-id>] HTTP/1.1
+```
+
+### Parameters
+
+| Name             | Type   | Description                                                |
+|------------------|--------|------------------------------------------------------------|
+| `notification-id`  | String | Name of the notification. If not provided, all notifications on the bucket are listed. |
+
+### Response Entities
+
+Response is XML encoded in the body of the request, in the following format:
+
+```
+<NotificationConfiguration xmlns="http://s3.amazonaws.com/doc/2006-03-01/">
+    <TopicConfiguration>
+        <Id></Id>
+        <Topic></Topic>
+        <Event></Event>
+        <Filter>
+            <S3Key>
+                <FilterRule>
+                    <Name></Name>
+                    <Value></Value>
+                </FilterRule>
+                 </S3Key>
+             <S3Metadata>
+                 <FilterRule>
+                     <Name></Name>
+                     <Value></Value>
+                 </FilterRule>
+             </S3Metadata>
+             <S3Tags>
+                 <FilterRule>
+                     <Name></Name>
+                     <Value></Value>
+                 </FilterRule>
+             </S3Tags>
+         </Filter>
+    </TopicConfiguration>
+</NotificationConfiguration>
+```
+
+| Name                      | Type      | Description                                       | Required |
+|---------------------------|-----------|---------------------------------------------------|----------|
+| `NotificationConfiguration` | Container | Holding a list of TopicConfiguration entities.    | Yes      |
+| `TopicConfiguration`         | Container | Holding Id, Topic, and a list of Event entities.  | Yes      |
+| `Id`                        | String    | Name of the notification.                         | Yes      |
+| `Topic`                     | String    | Topic ARN.                                       | Yes      |
+| `Event`                     | String    | Handled event. Multiple Event entities may exist. | Yes      |
+| `Filter`                    | Container | Holding the filters configured for this notification. | No       |
+
+### HTTP Response
+
+| HTTP Status | Status Code | Description                                  |
+|-------------|-------------|----------------------------------------------|
+| `404`         | NoSuchBucket | The bucket does not exist.                   |
+| `404`         | NoSuchKey    | The notification does not exist (if provided). |
 
 

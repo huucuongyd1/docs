@@ -1,0 +1,17 @@
+---
+title: "S3 Bucket Placement"
+---
+
+When creating a bucket with the S3 protocol, a placement target can be provided as part of the LocationConstraint to override the default placement targets from the user and zonegroup.
+
+Normally, the LocationConstraint must match the zonegroup’s `api_name`:
+
+```
+Normally, the LocationConstraint must match the zonegroup’s api_name:
+```
+
+A custom placement target can be added to the `api_name` following a colon:
+
+```
+<LocationConstraint>default:new-placement</LocationConstraint>
+```
