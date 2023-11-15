@@ -40,6 +40,19 @@
         "SDK/bucket",
         "SDK/object"
       ]
+    },
+    {
+      "group": "References",
+      "pages": [
+        "references/cplus",
+        "references/csharp",
+        "references/java",
+        "references/perl",
+        "references/php",
+        "references/python",
+        "references/ruby-gem2",
+        "references/ruby-gem3"
+      ]
     }
   ]
 }

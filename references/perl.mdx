@@ -1,0 +1,141 @@
+---
+title: "PERL S3 EXAMPLES"
+sidebarTitle: "Perl"
+---
+
+## Creating A Connection
+
+This creates a connection so that you can interact with the server.
+
+```perl Perl
+use Amazon::S3;
+my $access_key = 'put your access key here!';
+my $secret_key = 'put your secret key here!';
+
+my $conn = Amazon::S3->new({
+        aws_access_key_id     => $access_key,
+        aws_secret_access_key => $secret_key,
+        host                  => 'objects.dreamhost.com',
+        secure                => 1,
+        retry                 => 1,
+});
+```
+
+## Listing Owned Buckets
+
+This gets a list of Amazon::S3::Bucket objects that you own. We’ll also print out the bucket name and creation date of each bucket.
+
+```perl Perl
+my @buckets = @{$conn->buckets->{buckets} || []};
+foreach my $bucket (@buckets) {
+        print $bucket->bucket . "\t" . $bucket->creation_date . "\n";
+}
+```
+
+The output will look something like this:
+
+```
+mahbuckat1   2011-04-21T18:05:39.000Z
+mahbuckat2   2011-04-21T18:05:48.000Z
+mahbuckat3   2011-04-21T18:07:18.000Z
+```
+
+## Creating A Bucket
+
+This creates a new bucket called `my-new-bucket`.
+
+```perl Perl
+my $bucket = $conn->add_bucket({ bucket => 'my-new-bucket' });
+```
+
+## Listing A Bucket's Content
+
+This gets a list of hashes with info about each object in the bucket. We’ll also print out each object’s name, the file size, and last modified date.
+
+```perl Perl
+my @keys = @{$bucket->list_all->{keys} || []};
+foreach my $key (@keys) {
+        print "$key->{key}\t$key->{size}\t$key->{last_modified}\n";
+}
+```
+
+The output will look something like this:
+
+```
+myphoto1.jpg 251262  2011-08-08T21:35:48.000Z
+myphoto2.jpg 262518  2011-08-08T21:38:01.000Z
+```
+
+## Deleting A Bucket
+
+<Note>
+The Bucket must be empty! Otherwise it won’t work!
+</Note>
+
+```perl Perl
+$conn->delete_bucket($bucket);
+```
+
+## Creating An Object's ACL
+
+This makes the object `hello.txt` to be publicly readable and `secret_plans.txt` to be private.
+
+```perl Perl
+$bucket->set_acl({
+        key       => 'hello.txt',
+        acl_short => 'public-read',
+});
+$bucket->set_acl({
+        key       => 'secret_plans.txt',
+        acl_short => 'private',
+});
+```
+
+## Download An Object (To A File)
+
+This downloads the object `perl_poetry.pdf` and saves it in `/home/larry/documents/`
+
+```perl Perl
+$bucket->get_key_filename('perl_poetry.pdf', undef,
+        '/home/larry/documents/perl_poetry.pdf');
+```
+
+## Delete An Object
+
+This deletes the object `goodbye.txt`.
+
+```perl Perl
+$bucket->delete_key('goodbye.txt');
+```
+
+## Generate Object Download URLS (Sign And Unsigned)
+
+This generates an unsigned download URL for `hello.txt`. This works because we made `hello.txt` public by setting the ACL above. Then this generates a signed download URL for `secret_plans.txt` that will work for 1 hour. Signed download URLs will work for the time period even if the object is private (when the time period is up, the URL will stop working).
+
+```perl Perl
+use Muck::FS::S3::QueryStringAuthGenerator;
+my $generator = Muck::FS::S3::QueryStringAuthGenerator->new(
+        $access_key,
+        $secret_key,
+        0, # 0 means use 'http'. set this to 1 for 'https'
+        'objects.dreamhost.com',
+);
+
+my $hello_url = $generator->make_bare_url($bucket->bucket, 'hello.txt');
+print $hello_url . "\n";
+
+$generator->expires_in(3600); # 1 hour = 3600 seconds
+my $plans_url = $generator->get($bucket->bucket, 'secret_plans.txt');
+print $plans_url . "\n";
+```
+
+The output will look something like this:
+
+```
+http://objects.dreamhost.com:80/my-bucket-name/hello.txt
+http://objects.dreamhost.com:80/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
+```
+
+
+
+
