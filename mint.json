@@ -29,8 +29,7 @@
     {
       "group": "Introduction",
       "pages": [
-        "introduction/common",
-        "introduction/authentication"
+        "introduction/common"
       ]
     },
     {

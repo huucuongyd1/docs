@@ -9,7 +9,7 @@ You can setup the connection on global way:
 
 ```ruby Ruby
 Aws.config.update(
-        endpoint: 'https://objects.dreamhost.com.',
+        endpoint: 'https://hn.storage.weodata.vn.',
         access_key_id: 'my-access-key',
         secret_access_key: 'my-secret-key',
         force_path_style: true,
@@ -158,6 +158,6 @@ puts Aws::S3::Object.new(
 The output of this will look something like:
 
 ```
-http://objects.dreamhost.com/my-bucket-name/hello.txt
-http://objects.dreamhost.com/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
+http://hn.storage.weodata.vn/my-bucket-name/hello.txt
+http://hn.storage.weodata.vn/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
 ```

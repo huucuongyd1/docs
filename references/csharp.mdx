@@ -17,7 +17,7 @@ string accessKey = "put your access key here!";
 string secretKey = "put your secret key here!";
 
 AmazonS3Config config = new AmazonS3Config();
-config.ServiceURL = "objects.dreamhost.com";
+config.ServiceURL = "hn.storage.weodata.vn";
 
 AmazonS3Client s3Client = new AmazonS3Client(
         accessKey,
@@ -164,7 +164,7 @@ Console.WriteLine(url);
 The output of this will look something like:
 
 ```
-http://objects.dreamhost.com/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
+http://hn.storage.weodata.vn/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
 ```
 
 

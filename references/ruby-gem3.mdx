@@ -9,7 +9,7 @@ This creates a connection so that you can interact with the server.
 
 ```ruby Ruby
 AWS::S3::Base.establish_connection!(
-        :server            => 'objects.dreamhost.com',
+        :server            => 'hn.storage.weodata.vn',
         :use_ssl           => true,
         :access_key_id     => 'my-access-key',
         :secret_access_key => 'my-secret-key'
@@ -144,6 +144,6 @@ puts AWS::S3::S3Object.url_for(
 The output of this will look something like:
 
 ```
-http://objects.dreamhost.com/my-bucket-name/hello.txt
-http://objects.dreamhost.com/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
+http://hn.storage.weodata.vn/my-bucket-name/hello.txt
+http://hn.storage.weodata.vn/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
 ```

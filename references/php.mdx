@@ -26,7 +26,7 @@ use Aws\S3\S3Client;
 
 define('AWS_KEY', 'place access key here');
 define('AWS_SECRET_KEY', 'place secret key here');
-$ENDPOINT = 'http://objects.dreamhost.com';
+$ENDPOINT = 'http://hn.storage.weodata.vn';
 
 // require the amazon sdk from your composer vendor dir
 require __DIR__.'/vendor/autoload.php';
@@ -40,8 +40,8 @@ $client = new S3Client([
         'key' => AWS_KEY,
         'secret' => AWS_SECRET_KEY
     ],
-    // Set the S3 class to use objects.dreamhost.com/bucket
-    // instead of bucket.objects.dreamhost.com
+    // Set the S3 class to use hn.storage.weodata.vn/bucket
+    // instead of bucket.hn.storage.weodata.vn
     'use_path_style_endpoint' => true
 ]);
 ```
@@ -179,6 +179,6 @@ echo $request->getUri()."\n";
 The output of this will look something like:
 
 ```
-http://objects.dreamhost.com/my-bucket-name/hello.txt
-http://objects.dreamhost.com/my-bucket-name/secret_plans.txt?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=sandboxAccessKey%2F20190116%2F%2Fs3%2Faws4_request&X-Amz-Date=20190116T125520Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=61921f07c73d7695e47a2192cf55ae030f34c44c512b2160bb5a936b2b48d923
+http://hn.storage.weodata.vn/my-bucket-name/hello.txt
+http://hn.storage.weodata.vn/my-bucket-name/secret_plans.txt?X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=sandboxAccessKey%2F20190116%2F%2Fs3%2Faws4_request&X-Amz-Date=20190116T125520Z&X-Amz-SignedHeaders=host&X-Amz-Expires=3600&X-Amz-Signature=61921f07c73d7695e47a2192cf55ae030f34c44c512b2160bb5a936b2b48d923
 ```

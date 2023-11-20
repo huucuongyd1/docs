@@ -16,7 +16,7 @@ secret_key = 'put your secret key here!'
 conn = boto.connect_s3(
         aws_access_key_id = access_key,
         aws_secret_access_key = secret_key,
-        host = 'objects.dreamhost.com',
+        host = 'hn.storage.weodata.vn',
         #is_secure=False,               # uncomment if you are not using ssl
         calling_format = boto.s3.connection.OrdinaryCallingFormat(),
         )
@@ -130,6 +130,6 @@ print(plans_url)
 The output of this will look something like:
 
 ```
-http://objects.dreamhost.com/my-bucket-name/hello.txt
-http://objects.dreamhost.com/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
+http://hn.storage.weodata.vn/my-bucket-name/hello.txt
+http://hn.storage.weodata.vn/my-bucket-name/secret_plans.txt?Signature=XXXXXXXXXXXXXXXXXXXXXXXXXXX&Expires=1316027075&AWSAccessKeyId=XXXXXXXXXXXXXXXXXXX
 ```
